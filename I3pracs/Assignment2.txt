@@ -1,0 +1,224 @@
+
+GPS.java
+
+package ccoew.it.i3.businesslogic;
+
+import java.util.ArrayList;
+
+public class GPS
+{
+	private int id;
+	ArrayList<Track_Route>tr=new ArrayList<Track_Route>();
+
+	public int getId() 
+	{
+		return id;
+	}
+
+	public void setId(int id) 
+	{
+		this.id = id;
+	}
+
+	public void start_recording()
+	{
+		System.out.println("ID "+getId()+"  START RECORDING");
+	}
+
+	public void stop_recording()
+	{
+		System.out.println("ID "+getId()+"  STOP RECORDING");
+	}
+}
+
+Track_Point.java
+
+package ccoew.it.i3.businesslogic;
+
+public class Track_Point
+{
+
+	private double x;
+	private double y;
+	private double z;
+	private double time;
+
+	public Track_Point(double x, double y, double z, double time) 
+	{
+		super();
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.time = time;
+	}
+
+	public double getX() 
+	{
+		return x;
+	}
+	public void setX(double x) 
+	{
+		this.x = x;
+	}
+	public double getY() 
+	{
+		return y;
+	}
+	public void setY(double y) 
+	{
+		this.y = y;
+	}
+	public double getZ() 
+	{
+		return z;
+	}
+	public void setZ(double z) 
+	{
+		this.z = z;
+	}
+	public double getTime() 
+	{
+		return time;
+	}
+	public void setTime(double time) 
+	{
+		this.time = time;
+	}
+
+
+}
+
+Track_Route.java
+
+package ccoew.it.i3.businesslogic;
+
+import java.util.ArrayList;
+
+
+public class Track_Route
+{
+	private String name;
+	ArrayList<Track_Point> tp=new ArrayList<Track_Point>();
+	int i;
+	double total, length,length1,breadth,breadth1,time,velocity;
+	double height,height1,total1,total2,total3,final_total,sum=0.0;
+	public Track_Route(String name) 
+	{
+		super();
+		this.name = name;
+	}
+
+	public String getName() 
+	{
+		return name;
+	}
+
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+
+	public ArrayList<Track_Point> getTp() 
+	{
+		return tp;
+	}
+
+	public void setTp(ArrayList<Track_Point> tp) 
+	{
+		this.tp = tp;
+	}
+
+	public void addTrack(Track_Point track_point)
+	{
+		tp.add(track_point);
+	}
+
+	public void calculate_length(ArrayList<Track_Point> tp1)
+	{
+		for(i=0;i<(tp.size()-1);i++)
+		{
+			length=tp.get(i).getX();
+			length1=tp.get(i+1).getX();
+			total=length-length1;
+		
+			breadth=tp.get(i).getY();
+			breadth1=tp.get(i+1).getY();
+			total1=breadth-breadth1;
+		
+			height=tp.get(i).getZ();
+			height1=tp.get(i+1).getZ();
+			total2=height-height1;
+			final_total=Math.sqrt((total*total)+(total1*total1)+(total2*total2));
+			sum=sum+final_total;
+			
+		}
+		int size=tp.size()-1;
+		time=tp.get(size).getTime();
+		velocity=sum/time;
+		System.out.println("Length is "+sum);
+		System.out.println("velocity is"+velocity);
+	}
+}
+
+
+	Test.java
+
+	package ccoew.it.i3.client;
+
+	import java.util.ArrayList;
+
+import ccoew.it.i3.businesslogic.GPS;
+import ccoew.it.i3.businesslogic.Track_Point;
+import ccoew.it.i3.businesslogic.Track_Route;
+
+public class Test 
+{
+
+	public static void main(String[] args)
+	{
+	
+			GPS gps =new GPS();
+			gps.start_recording();
+			Track_Route tr=new Track_Route("Track_Route1");
+		
+			System.out.println(tr.getName());
+			ArrayList<Track_Point> tp1=new ArrayList<Track_Point>();
+		
+			Track_Point tp_new=new Track_Point(10,10,10,10);
+			tr.addTrack(tp_new);
+		
+			Track_Point tp_new1=new Track_Point(0,0,0,20);
+			tr.addTrack(tp_new1);
+		
+			Track_Point tp_new2=new Track_Point(10,10,10,30);
+			tr.addTrack(tp_new2);
+		
+			Track_Point tp_new3=new Track_Point(30,30,30,40);
+			tr.addTrack(tp_new3);
+		
+			Track_Point tp_new4=new Track_Point(50,50,50,50);
+			tr.addTrack(tp_new4);
+		
+			Track_Point tp_new5=new Track_Point(60,60,60,60);
+			tr.addTrack(tp_new5);
+		
+			tp1=tr.getTp();
+			tr.calculate_length(tp1);
+
+			gps.stop_recording();
+	
+
+		}
+
+	}
+
+
+//output
+
+ID 0  START RECORDING
+Track_Route1
+Length is 121.24355652982142
+velocity is2.0207259421636903
+ID 0  STOP RECORDING
+
+

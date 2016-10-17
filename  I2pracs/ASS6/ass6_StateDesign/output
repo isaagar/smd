@@ -1,0 +1,17 @@
+A software Tester Person [name=Suresh] enters a defect in defect tracking system
+ State changed to AVAILABLE
+
+ Current State is AVAILABLE
+ Developer Person [name=Ramesh] acquire this defect
+ AVAILABLE state changed into INPROGESS state
+
+ Current State is INPROGESS
+ Defect is Fixed, solution found
+ INPROGESS state changed into READYFORREVIEW state
+
+ Current State is READYFORREVIEW
+ Reviewer Person [name=Mahesh] reviews the solution of defect
+
+ Count is = 46
+ READYFORREVIEW state changed into RESOLVED state
+

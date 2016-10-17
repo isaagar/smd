@@ -1,0 +1,149 @@
+Point.java
+
+package ccoew.it.i3.businesslogic;
+
+public class Point {
+	private int x;
+	private int y;
+	public Point(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	private void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	private void setY(int y) {
+		this.y = y;
+	}
+	
+}
+
+Shape.java
+
+package ccoew.it.i3.businesslogic;
+
+public abstract class Shape {
+	private Point center;
+
+	public Shape(Point center) {
+		super();
+		this.center = center;
+	}
+	public abstract double area();
+	public abstract double perimeter();
+	public Point getCenter() {
+		return center;
+	}
+	private void setCenter(Point center) {
+		this.center = center;
+	}
+	
+}
+
+Circle.java
+
+package ccoew.it.i3.businesslogic;
+
+public class Circle extends Shape {
+	private int radius;
+	
+	public Circle(Point center, int radius) {
+		super(center);
+		this.radius = radius;
+	}
+
+	@Override
+	public double area() {
+		return Math.PI*radius*radius;
+	}
+
+	@Override
+	public double perimeter() {
+		return 2.0*Math.PI*radius;
+	}
+
+}
+
+Square.java
+
+package ccoew.it.i3.businesslogic;
+
+public class Square extends Shape {
+	private int side;
+	
+	public Square(Point center, int side) {
+		super(center);
+		this.side = side;
+	}
+
+	@Override
+	public double area() {
+		return side*side;
+	}
+
+	@Override
+	public double perimeter() {
+		// TODO Auto-generated method stub
+		return 4*side;
+	}
+
+}
+
+DrawingBoard.java
+
+package ccoew.it.i3.businesslogic;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class DrawingBoard {
+	private Set<Shape> shapes=new HashSet<Shape>();
+	public void add(Shape shape){
+		shapes.add(shape);
+	}
+	public double totalArea()
+	{
+		double totalArea=0;
+		for(Shape shape:shapes){
+			totalArea+=shape.area();
+			
+		}
+		return totalArea;
+	}
+}
+
+
+TestClient.java
+
+package ccoew.it.i3.client;
+
+import ccoew.it.i3.businesslogic.Circle;
+import ccoew.it.i3.businesslogic.DrawingBoard;
+import ccoew.it.i3.businesslogic.Point;
+import ccoew.it.i3.businesslogic.Square;
+
+public class TestClient {
+	public static void main(String[] args) {
+		DrawingBoard board=new DrawingBoard();
+		Circle circle=new Circle(new Point(20,20),5);
+		System.out.println("Perimeter of Circle="+circle.perimeter());
+		Square square=new Square(new Point(30,30),5);
+		System.out.println("Perimeter of Square="+square.perimeter());
+		board.add(circle);
+		board.add(square);
+		System.out.println("Total area of the board="+board.totalArea());
+	}
+}
+
+//output
+
+Perimeter of Circle=31.41592653589793
+Perimeter of Square=20.0
+Total area of the board=103.53981633974483
