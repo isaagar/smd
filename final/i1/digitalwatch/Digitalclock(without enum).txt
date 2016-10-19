@@ -1,0 +1,219 @@
+	//DisplayTime.java
+
+	package BusinessLogic;
+
+	public class DisplayTime extends State 
+	{
+		public void displayTime(Watch watch) 
+		{
+			System.out.println(watch.getHour() + ":" + watch.getMin());
+		}
+
+		@Override
+		public void pressButtonA(Watch watch)
+		{
+			watch.setButtonA(true);
+			watch.setState(new SetHour());
+			// TODO Auto-generated method stub
+			System.out.println("\nState is changed from Display Time to Set hour ");
+
+		}
+
+		@Override
+		public void pressButtonB(Watch watch)
+		{
+			// TODO Auto-generated method stub
+		
+			watch.setButtonB(true);
+			System.out.println("\nNo change will happen");
+		}
+
+	
+
+	}
+
+	//SetHour.java
+
+	package BusinessLogic;
+
+	public class SetHour extends State 
+	{
+
+		int h;
+		@Override
+		public void pressButtonA(Watch watch)
+		{
+			// TODO Auto-generated method stub
+			watch.setButtonA(true);
+			watch.setState(new SetMin());
+			System.out.println("\nState is changed from Set hour to Set minute ");
+		}
+
+		@Override
+		public void pressButtonB(Watch watch) 
+		{
+			// TODO Auto-generated method stub
+		
+			watch.setButtonB(true);
+			h=watch.getHour();
+			h++;
+			watch.setHour(h);
+			System.out.println("\nHour is incremented by one");
+			System.out.println("The changed time is : ");
+			System.out.println(watch.getHour()+":"+watch.getMin());
+		}
+	}
+
+	//SetMin.java
+
+	package BusinessLogic;
+
+	public class SetMin extends State {
+		int m;
+		@Override
+		public void pressButtonA(Watch watch) 
+		{
+			// TODO Auto-generated method stub
+		
+			watch.setButtonA(true);
+			watch.setState(new DisplayTime());
+			System.out.println("\nState is changed from Set minute to Display Time ");
+		}
+
+		@Override
+		public void pressButtonB(Watch watch) 
+		{
+			// TODO Auto-generated method stub
+		
+			watch.setButtonB(true);
+			m=watch.getMin();
+			m++;
+			watch.setMin(m);
+			System.out.println("\nMinute is incremented by one");
+			System.out.println("The changed time is : ");
+			System.out.println(watch.getHour()+":"+watch.getMin());
+		}
+	}
+
+	//State.java
+
+	package BusinessLogic;
+
+	import BusinessLogic.Watch.*;
+
+	public class State 
+	{
+		public void pressButtonA(Watch watch) 
+		{
+			System.out.println("\n State is changed");
+		}
+
+		public void pressButtonB(Watch watch)
+		{
+			System.out.println("\nNo change");
+
+		}
+
+	}
+
+	//Watch.java
+
+	package BusinessLogic;
+
+	public class Watch 
+	{
+		private int hour;
+		private int min;
+		boolean ButtonA;
+		boolean ButtonB;
+		private State state;
+	
+		public Watch(int hour, int min, boolean buttonA, boolean buttonB,State state) 
+		{
+			super();
+			this.hour = hour;
+			this.min = min;
+			ButtonA = buttonA;
+			ButtonB = buttonB;
+			this.state = state;
+		}
+
+		public int getHour() 
+		{
+			return hour;
+		}
+
+		public void setHour(int hour) 
+		{
+			this.hour = hour;
+		}
+
+		public int getMin() 
+		{
+			return min;
+		}
+
+		public void setMin(int min) 
+		{
+			this.min = min;
+		}
+
+
+		public boolean isButtonA() 
+		{
+			return ButtonA;
+		}
+
+		public void setButtonA(boolean buttonA) 
+		{
+			ButtonA = buttonA;
+		}
+
+		public boolean isButtonB() 
+		{
+			return ButtonB;
+		}
+
+		public void setButtonB(boolean buttonB) 
+		{
+			ButtonB = buttonB;
+		}
+
+		public State getState() 
+		{
+			return state;
+		}
+
+		public void setState(State state) 
+		{
+			this.state = state;
+		}
+
+		@Override
+		public String toString() 
+		{
+			return "Watch [hour=" + hour + ", min=" + min + ", ButtonA=" + ButtonA
+					+ ", ButtonB=" + ButtonB + ", state=" + state + "]";
+		}	
+	}
+
+	//Test.java
+
+	package Client;
+
+	import BusinessLogic.DisplayTime;
+	import BusinessLogic.SetHour;
+	import BusinessLogic.SetMin;
+	import BusinessLogic.Watch;
+
+	public class Test 
+	{
+	
+		public static void main(String[] args)
+		{
+			Watch watch = new Watch(1, 00, false, false, new SetMin());
+			watch.getState().pressButtonA(watch);
+			watch.getState().pressButtonB(watch);
+		}
+
+	}

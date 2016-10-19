@@ -1,0 +1,9 @@
+OUTPUT:
+
+Purchases made:
+The purchase amount is Rs. 20000 on Tue Feb 23 00:00:00 IST 2016
+The purchase amount is Rs. 30000 on Fri Jul 01 00:00:00 IST 2016
+The purchase amount is Rs. 15000 on Fri Oct 14 00:00:00 IST 2016
+The purchase amount is Rs. 10000 on Fri Oct 14 00:00:00 IST 2016
+Points:
+The total payback points calculated for the credit card no. 123456789000 are: 516

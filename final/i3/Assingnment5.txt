@@ -1,0 +1,183 @@
+	/*Assignment Number 5: Strategy design Pattern*/
+
+
+	Employee.java
+
+	package ccoew.it.i3.businesslogic;
+
+	public class Employee {
+		private int emp_id;
+		private String emp_name;
+		private double emp_basicpay=0;
+		private PayPolicy payPolicy;
+		public Employee(int emp_id, String emp_name, double emp_basicpay,
+		PayPolicy payPolicy) {
+			super();
+			this.emp_id = emp_id;
+			this.emp_name = emp_name;
+			this.emp_basicpay = emp_basicpay;
+			this.payPolicy = payPolicy;
+		}
+		public int getEmp_id() {
+			return emp_id;
+		}
+		public void setEmp_id(int emp_id) {
+			this.emp_id = emp_id;
+		}
+		public String getEmp_name() {
+			return emp_name;
+		}
+		public void setEmp_name(String emp_name) {
+			this.emp_name = emp_name;
+		}
+		public double getEmp_basicpay() {
+			return emp_basicpay;
+		}
+		public void setEmp_basicpay(double emp_basicpay) {
+			this.emp_basicpay = emp_basicpay;
+	}
+		public PayPolicy getPayPolicy() {
+		return payPolicy;
+		}
+		public void setPayPolicy(PayPolicy payPolicy) {
+			this.payPolicy = payPolicy;
+		}
+		public void calculateGrosspay(){
+			double pay;
+			pay = this.getPayPolicy().calculate_salary(getEmp_basicpay());
+			System.out.println("GrossSalary="+pay);
+		}
+	
+	
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("Employee [emp_id=");
+			builder.append(emp_id);
+			builder.append(", emp_name=");
+			builder.append(emp_name);
+			builder.append(", emp_basicpay=");
+			builder.append(emp_basicpay);
+			builder.append("]");
+			return builder.toString();
+		}
+		public void display()
+		{
+			System.out.println(this.toString());
+		}
+	}
+
+
+	PayPolicy.java
+
+	package ccoew.it.i3.businesslogic;
+
+	public abstract class PayPolicy {
+
+		public abstract double calculate_salary(double basepay);
+	}
+
+	Trainee.java
+
+	package ccoew.it.i3.businesslogic;
+
+	public class Trainee extends PayPolicy{
+	public double calculate_salary(double basicpay)
+	{
+		double temp = basicpay;
+		return temp;
+	}	
+	}
+
+	Temporary.java
+
+	package ccoew.it.i3.businesslogic;
+
+	public class Temporary extends PayPolicy{
+		public double calculate_salary(double basicpay)
+		{
+			double temp = (basicpay * 40) / 100;
+			temp = basicpay + temp;
+			return temp;
+		}
+	}
+
+	Permanent.java
+
+	package ccoew.it.i3.businesslogic;
+
+	public class Permanent extends PayPolicy{
+	public double calculate_salary(double basicpay)
+	{
+		double temp;
+		if(basicpay > 40000)
+		{
+			temp = (basicpay * 70) / 100;
+			temp = basicpay + temp + 5000;
+		}
+		else
+		{
+			temp = (basicpay * 70) / 100;
+			temp = basicpay + temp;
+		}
+		return temp;
+	}
+	}
+
+
+	TestClient.java
+
+	package ccoew.it.i3.client;
+
+	import ccoew.it.i3.businesslogic.Employee;
+	import ccoew.it.i3.businesslogic.Permanent;
+	import ccoew.it.i3.businesslogic.Temporary;
+	import ccoew.it.i3.businesslogic.Trainee;
+
+	public class TestClient {
+
+		public static void main(String[] args) {
+			Employee first=new Employee(1, "kirtee", 70000.00,new Trainee());
+			first.display();
+			first.calculateGrosspay();
+			
+			Employee second = new Employee(2, "Yogita", 70000.00, new Temporary());
+			second.display();
+			second.calculateGrosspay();
+			
+			System.out.println("Third Employee");
+			System.out.println("Third Employee as a Trinee Employee");
+			Employee third = new Employee(3, "Ankita", 70000.00, new Trainee());
+			third.display();
+			third.calculateGrosspay();
+
+			System.out.println("Third Employee as a Temporary Employee");
+			third.setPayPolicy(new Temporary());
+			third.calculateGrosspay();
+
+			System.out.println("Third Employee as a permanent Employee");
+			third.display();
+			third.setPayPolicy(new Permanent());
+			third.calculateGrosspay();
+			third.display();
+			
+		}
+	}	
+
+
+	/************************Output********************************
+	Employee [emp_id=1, emp_name=kirtee, emp_basicpay=70000.0]
+	GrossSalary=70000.0
+	Employee [emp_id=2, emp_name=Yogita, emp_basicpay=70000.0]
+	GrossSalary=98000.0
+	Third Employee
+	Third Employee as a Trinee Employee
+	Employee [emp_id=3, emp_name=Ankita, emp_basicpay=70000.0]
+	GrossSalary=70000.0
+	Third Employee as a Temporary Employee	
+	GrossSalary=98000.0
+	Third Employee as a permanent Employee
+	Employee [emp_id=3, emp_name=Ankita, emp_basicpay=70000.0]
+	GrossSalary=124000.0
+	Employee [emp_id=3, emp_name=Ankita, emp_basicpay=70000.0]
+	*/

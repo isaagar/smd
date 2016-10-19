@@ -1,0 +1,25 @@
+Current State=idle
+/n vending machine is in IDLE state
+Current State=idle
+
+vending machine is in IDLE state,coins are inserted into insertion slit
+
+ changing from IDLE to ACCEPTING COIN state
+Current state=accept_coin
+Checking if amount entered is equal to price of drink
+
+ Amount is equal
+
+Changing from ACCEPT_COIN TO SELECT_DRINK state
+Current state=select_drink
+
+ asks for selection of drink
+
+ changing from SELECT to DISPENSING
+Current state=dispenesing
+
+ Dispensing Drink cans into dispensing tray
+
+ drinks dispensed
+Changing from Dispensing to IDLE
+Current state=idle
